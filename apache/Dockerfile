@@ -1,5 +1,7 @@
 FROM httpd:2.2
 
+RUN groupadd -r apache && useradd -r -d /home/apache -m -g apache apache
+
 RUN buildDeps=' \
       curl \
       gcc \
@@ -19,6 +21,16 @@ RUN buildDeps=' \
     && apt-get purge -y --auto-remove $buildDeps \
     && rm -r /var/lib/apt/lists/*
 
-RUN mkdir -p /usr/local/apache2/logs
+COPY apache/httpd.conf /usr/local/apache2/conf/httpd.conf
+
+RUN mkdir -p \
+    /usr/local/apache2/logs \
+    /data/apache/fcgi-bin \
+    /data/apache/htdocs
+
+RUN echo "#!/bin/sh" > /data/apache/fcgi-bin/app \
+    && chmod 0755 /data/apache/fcgi-bin/app
 
 VOLUME ["/usr/local/apache2/logs"]
+
+EXPOSE 8080

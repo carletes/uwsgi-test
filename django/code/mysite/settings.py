@@ -1,3 +1,6 @@
+import logging
+
+
 SECRET_KEY = 'i+*f=uvh#ahkxql22vinj8oif45%gjn!ra3f@!#8l*di=%vmt9'
 
 DEBUG = True
@@ -25,3 +28,6 @@ USE_I18N = False
 USE_L10N = False
 
 USE_TZ = False
+
+logging.basicConfig(level=logging.INFO,
+                    format="%(asctime)s PID %(process)s %(threadName)s %(name)s %(message)s")

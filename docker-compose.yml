@@ -11,8 +11,8 @@ services:
         - ftp_proxy
         - no_proxy
     image: ecmwf/uwsgitest-apache
-    expose:
-      - "80"
+    ports:
+      - "8080:8080"
     links:
       - django
     read_only: true
@@ -28,7 +28,7 @@ services:
         - no_proxy
     image: ecmwf/uwsgitest-django
     expose:
-      - "8080"
+      - "3000"
     volumes:
       - ./django/docker-entrypoint.sh:/docker-entrypoint.sh:ro
     read_only: true
